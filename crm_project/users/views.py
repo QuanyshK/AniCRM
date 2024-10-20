@@ -81,20 +81,17 @@ def edit_user_view(request, pk):
 def manage_access_view(request, pk):
     user = get_object_or_404(User, pk=pk)
 
-    # Проверка на роль пользователя: администратор или менеджер
     if request.user.is_admin:
         if request.method == 'POST':
             form = ManagerAccessForm(request.POST, instance=user)
             if form.is_valid():
                 form.save()
-                return redirect('user-detail', pk=user.pk)  # перенаправление на страницу деталей пользователя
+                return redirect('user-detail', pk=user.pk)  
         else:
             form = ManagerAccessForm(instance=user)
-        
-        # Возвращаем форму для управления доступом
+
         return render(request, 'users/manage_access.html', {'form': form, 'user': user})
 
-    # Если у пользователя нет прав, перенаправляем на список пользователей
     return redirect('user-list')
 
 from django.contrib.auth.decorators import login_required
