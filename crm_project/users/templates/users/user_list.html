@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>User List</h1>
+
+    <form method="GET" class="mb-3">
+        <div class="row">
+            <div class="col">
+                <input type="text" name="q" value="{{ query }}" placeholder="Search users..." class="form-control" />
+            </div>
+            <div class="col">
+                <select name="role" class="form-control">
+                    <option value="">All Roles</option>
+                    <option value="manager" {% if role_filter == 'manager' %}selected{% endif %}>Managers</option>
+                    <option value="regular" {% if role_filter == 'regular' %}selected{% endif %}>Regular Users</option>
+                </select>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td><a href="{% url 'user-detail' user.id %}">{{ user.username }}</a></td>
+                <td>{{ user.email }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No users found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'profile' %}" class="btn btn-primary mt-3">Back to Profile</a>
+</div>
+{% endblock %}

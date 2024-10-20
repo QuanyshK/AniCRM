@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>User Detail</h1>
+    <div class="card p-4 shadow">
+        <h2>{{ user.username }}</h2>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Bio:</strong> {{ user.bio }}</p>
+        <a href="{% url 'manage-access' user.id %}">Manage Manager Access</a> 
+        <p></p>
+        <a href="{% url 'user-list' %}" class="btn btn-primary">Back to User List</a>
+    </div>
+</div>
+{% endblock %}

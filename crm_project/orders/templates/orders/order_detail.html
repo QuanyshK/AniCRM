@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container mt-5">
+    <h2>{{ order.title }}</h2>
+    <p><strong>Description:</strong> {{ order.description }}</p>
+    {% if user.is_manager %}
+    <p><strong>Manager:</strong> {{ order.manager.username }}</p>
+      <p><strong>Category:</strong> {{ order.category.name }}</p>
+      <p><strong>Status:</strong> {{ order.status.name }}</p>
+      <p><strong>Created At:</strong> {{ order.created_at }}</p>
+      
+      <h3>Messages:</h3>
+      <ul class="list-group">
+        {% for message in order.messages.all %}
+          <li class="list-group-item">{{ message.sender.username }}: {{ message.text }} ({{ message.created_at }})</li>
+        {% endfor %}
+      </ul>
+      
+      <div class="mt-4">
+        <a href="{% url 'edit_order' order.pk %}" class="btn btn-info">Change Order</a>
+      </div>
+      
+      <h3 class="mt-4">Add a Message</h3>
+      <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Send</button>
+      </form>
+    {% endif %}
+    <a href="{% url 'order_list' %}" class="btn btn-secondary mt-3">Back to Order List</a>
+  </div>
+{% endblock %}

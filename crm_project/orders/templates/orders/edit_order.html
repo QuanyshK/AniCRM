@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container mt-5">
+    <h2>Edit Order</h2>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-success">Save changes</button>
+    </form>
+    <a href="{% url 'order_list' %}" class="btn btn-secondary mt-3">Back to Order List</a>
+  </div>
+{% endblock %}
