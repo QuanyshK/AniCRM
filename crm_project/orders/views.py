@@ -38,6 +38,7 @@ def edit_order_view(request, pk):
                 return redirect('order_list')
         else:
             form = ManagerOrderUpdateForm(instance=order)
+            form.fields['manager'].queryset = User.objects.filter(is_manager=True)
     else:
         return redirect('order_list') 
 
